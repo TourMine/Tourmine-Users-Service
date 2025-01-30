@@ -1,2 +1,2 @@
-# Serviço de torneios
-### Gerencia e mantém o serviço de torneios
+# Serviço de usuários
+### Gerencia e mantém o serviço de usuários
