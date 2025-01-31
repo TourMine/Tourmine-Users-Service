@@ -1,41 +1,45 @@
+using Microsoft.EntityFrameworkCore;
+using Tourmine.Users.Application.Interfaces;
+using Tourmine.Users.Application.UseCases;
+using Tourmine.Users.Domain.Interfaces.Repositories;
+using Tourmine.Users.Infrastructure;
+using Tourmine.Users.Infrastructure.Context;
+using Tourmine.Users.Infrastructure.Persistence.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+// Adiciona os serviços necessários para Swagger
+builder.Services.AddControllers(); // Adiciona o controller
+builder.Services.AddEndpointsApiExplorer(); // Adiciona o endpoint no swagger
+builder.Services.AddSwaggerGen();  // Adiciona o swagger
+
+// Usecase 
+builder.Services.AddScoped<ICreateUserUseCase, CreateUserUseCase>();
+builder.Services.AddScoped<IGetByIdUseCase, GetByUseCase>();
+
+// Repository
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+// Add Mediator DI
+builder.Services.AddMediatR(cfg 
+    => cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseNpgsql(Settings.ConnectionString));
 
 var app = builder.Build();
+
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger(); // Habilita o Swagger
+    app.UseSwaggerUI(); // Habilita a interface gráfica do Swagger UI
 }
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+app.MapControllers();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
