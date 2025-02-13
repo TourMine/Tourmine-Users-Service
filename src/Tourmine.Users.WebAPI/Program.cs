@@ -9,11 +9,23 @@ using Tourmine.Users.Infrastructure.Persistence.Repositories;
 var builder = WebApplication.CreateBuilder(args);
 
 // Adiciona os serviços necessários para Swagger
-builder.Services.AddControllers(); // Adiciona o controller
-builder.Services.AddEndpointsApiExplorer(); // Adiciona o endpoint no swagger
-builder.Services.AddSwaggerGen();  // Adiciona o swagger
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
-// Usecase 
+// Configuração do CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngular",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200") // Permitir o front-end Angular
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        });
+});
+
+// Usecases 
 builder.Services.AddScoped<ICreateUserUseCase, CreateUserUseCase>();
 builder.Services.AddScoped<IGetByIdUseCase, GetByUseCase>();
 
@@ -21,7 +33,7 @@ builder.Services.AddScoped<IGetByIdUseCase, GetByUseCase>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 // Add Mediator DI
-builder.Services.AddMediatR(cfg 
+builder.Services.AddMediatR(cfg
     => cfg.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -31,15 +43,16 @@ var app = builder.Build();
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
-// Configure the HTTP request pipeline.
+// Configure o middleware do CORS antes dos controllers
+app.UseCors("AllowAngular");
+
+// Configure o HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger(); // Habilita o Swagger
-    app.UseSwaggerUI(); // Habilita a interface gráfica do Swagger UI
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
-
 app.MapControllers();
-
 app.Run();
