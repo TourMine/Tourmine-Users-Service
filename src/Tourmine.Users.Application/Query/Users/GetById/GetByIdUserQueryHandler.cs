@@ -3,7 +3,7 @@ using Tourmine.Users.Application.Responses;
 using Tourmine.Users.Domain.Entities;
 using Tourmine.Users.Domain.Interfaces.Repositories;
 
-namespace Tourmine.Users.Application.Query
+namespace Tourmine.Users.Application.Query.Users.GetById
 {
     public class GetByIdUserQueryHandler : IRequestHandler<GetByIdUserQuery, UserResponse>
     {
@@ -11,7 +11,7 @@ namespace Tourmine.Users.Application.Query
 
         public GetByIdUserQueryHandler(IUserRepository repository)
         {
-            _repository = repository;    
+            _repository = repository;
         }
 
         public async Task<UserResponse> Handle(GetByIdUserQuery request, CancellationToken cancellationToken)

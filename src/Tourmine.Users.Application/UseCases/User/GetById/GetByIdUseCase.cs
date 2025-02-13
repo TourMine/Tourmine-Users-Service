@@ -1,13 +1,14 @@
 ﻿using MediatR;
 using Tourmine.Users.Application.Interfaces;
 using Tourmine.Users.Application.Query;
+using Tourmine.Users.Application.Query.Users.GetById;
 using Tourmine.Users.Application.Responses;
 
-namespace Tourmine.Users.Application.UseCases
+namespace Tourmine.Users.Application.UseCases.User.GetById
 {
-    public class GetByUseCase : BaseUseCase, IGetByIdUseCase
+    public class GetByIdUseCase : BaseUseCase, IGetByIdUseCase
     {
-        public GetByUseCase(IMediator mediator) : base(mediator)
+        public GetByIdUseCase(IMediator mediator) : base(mediator)
         {
         }
 
