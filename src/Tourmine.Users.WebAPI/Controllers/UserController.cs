@@ -8,8 +8,8 @@ namespace Tourmine.Users.WebAPI.Controllers
     [Route("users")]
     public class UserController : ControllerBase
     {
-        [HttpPost("v1/create")]
-        public async Task<IActionResult> Create([FromBody] UserRequest request, [FromServices] ICreateUserUseCase useCase)
+        [HttpPost("v1/register")]
+        public async Task<IActionResult> Register([FromBody] UserRequest request, [FromServices] IRegisterUserUseCase useCase)
         {
             var result = await useCase.Execute(request);
             return Ok(result);
@@ -19,6 +19,13 @@ namespace Tourmine.Users.WebAPI.Controllers
         public async Task<IActionResult> GetById([FromRoute] Guid id, [FromServices] IGetByIdUseCase useCase)
         {
             var result = await useCase.Execute(id);
+            return Ok(result);
+        }
+
+        [HttpGet("v1/get-by-email")]
+        public async Task<IActionResult> GetByEmail([FromQuery] string email, [FromServices] IGetByEmailUseCase useCase)
+        {
+            var result = await useCase.Execute(email);
             return Ok(result);
         }
     }

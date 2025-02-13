@@ -1,4 +1,5 @@
-﻿using Tourmine.Users.Domain.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Tourmine.Users.Domain.Entities;
 using Tourmine.Users.Domain.Interfaces.Repositories;
 using Tourmine.Users.Infrastructure.Context;
 
@@ -38,6 +39,18 @@ namespace Tourmine.Users.Infrastructure.Persistence.Repositories
             try
             {
                 return await _context.Users.FindAsync(id);  
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<User> GetByEmail(string email)
+        {
+            try
+            {
+                return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
             }
             catch (Exception ex)
             {

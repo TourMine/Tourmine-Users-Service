@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Tourmine.Users.Application.Responses;
 
-namespace Tourmine.Users.Application.Query
+namespace Tourmine.Users.Application.Query.Users.GetById
 {
     public class GetByIdUserQuery : IRequest<UserResponse>
     {

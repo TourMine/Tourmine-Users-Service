@@ -1,10 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using Tourmine.Users.Application.Interfaces;
-using Tourmine.Users.Application.UseCases;
+using Tourmine.Users.Application.UseCases.User.Create;
+using Tourmine.Users.Application.UseCases.User.GetByEmail;
+using Tourmine.Users.Application.UseCases.User.GetById;
 using Tourmine.Users.Domain.Interfaces.Repositories;
+using Tourmine.Users.Domain.Interfaces.Services;
 using Tourmine.Users.Infrastructure;
 using Tourmine.Users.Infrastructure.Context;
 using Tourmine.Users.Infrastructure.Persistence.Repositories;
+using Tourmine.Users.Infrastructure.Persistence.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,11 +18,16 @@ builder.Services.AddEndpointsApiExplorer(); // Adiciona o endpoint no swagger
 builder.Services.AddSwaggerGen();  // Adiciona o swagger
 
 // Usecase 
-builder.Services.AddScoped<ICreateUserUseCase, CreateUserUseCase>();
-builder.Services.AddScoped<IGetByIdUseCase, GetByUseCase>();
+builder.Services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
+builder.Services.AddScoped<IGetByIdUseCase, GetByIdUseCase>();
+builder.Services.AddScoped<IGetByEmailUseCase, GetByEmailUseCase>();
 
 // Repository
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+
+// Services
+builder.Services.AddScoped<IPasswordHasherService, PasswordHasherService>();
 
 // Add Mediator DI
 builder.Services.AddMediatR(cfg 
