@@ -12,7 +12,7 @@ namespace Tourmine.Users.Application.UseCases.User.Create
         {
         }
 
-        public async Task<bool> Execute(UserRequest request)
+        public async Task<bool> Execute(RegisterRequest request)
         {
             var userExists = await mediator.Send(new GetUserByEmailQuery(request.Email));
 

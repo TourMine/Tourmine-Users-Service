@@ -5,9 +5,9 @@ namespace Tourmine.Users.Application.Commands
 {
     public class RegisterUserCommand : IRequest<bool>
     {
-        public UserRequest Request { get; set; }
+        public RegisterRequest Request { get; set; }
 
-        public RegisterUserCommand(UserRequest request)
+        public RegisterUserCommand(RegisterRequest request)
         {
             Request = request;
         }
