@@ -1,8 +1,11 @@
-﻿namespace Tourmine.Users.Domain.Enums
+﻿using Microsoft.Win32;
+using Tourmine.Users.Domain.Entities;
+
+namespace Tourmine.Users.Domain.Enums
 {
     public enum EUserType
     {
         Organizer = 1,
-        Participant = 2
+        Player = 2
     }
 }

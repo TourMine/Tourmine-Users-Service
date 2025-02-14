@@ -9,7 +9,7 @@ namespace Tourmine.Users.WebAPI.Controllers
     public class UserController : ControllerBase
     {
         [HttpPost("v1/register")]
-        public async Task<IActionResult> Register([FromBody] UserRequest request, [FromServices] IRegisterUserUseCase useCase)
+        public async Task<IActionResult> Register([FromBody] RegisterRequest request, [FromServices] IRegisterUserUseCase useCase)
         {
             var result = await useCase.Execute(request);
             return Ok(result);

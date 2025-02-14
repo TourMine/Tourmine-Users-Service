@@ -4,6 +4,6 @@ namespace Tourmine.Users.Application.Interfaces
 {
     public interface IRegisterUserUseCase
     {
-        Task<bool> Execute(UserRequest request);
+        Task<bool> Execute(RegisterRequest request);
     }
 }
