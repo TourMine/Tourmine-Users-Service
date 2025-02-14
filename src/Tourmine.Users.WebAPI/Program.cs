@@ -18,6 +18,18 @@ builder.Services.AddControllers(); // Adiciona o controller
 builder.Services.AddEndpointsApiExplorer(); // Adiciona o endpoint no swagger
 builder.Services.AddSwaggerGen();  // Adiciona o swagger
 
+//Configurando CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngular",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200") // Permitir o front-end Angular
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        });
+});
+
 // Usecase 
 builder.Services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
 builder.Services.AddScoped<IGetByIdUseCase, GetByIdUseCase>();
@@ -42,12 +54,15 @@ var app = builder.Build();
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
+app.UseCors("AllowAngular");
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger(); // Habilita o Swagger
     app.UseSwaggerUI(); // Habilita a interface gráfica do Swagger UI
 }
+
 
 app.UseHttpsRedirection();
 
