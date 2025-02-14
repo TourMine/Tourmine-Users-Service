@@ -3,6 +3,7 @@ using Tourmine.Users.Application.Interfaces;
 using Tourmine.Users.Application.UseCases.User.Create;
 using Tourmine.Users.Application.UseCases.User.GetByEmail;
 using Tourmine.Users.Application.UseCases.User.GetById;
+using Tourmine.Users.Application.UseCases.ValidatePassword;
 using Tourmine.Users.Domain.Interfaces.Repositories;
 using Tourmine.Users.Domain.Interfaces.Services;
 using Tourmine.Users.Infrastructure;
@@ -21,6 +22,7 @@ builder.Services.AddSwaggerGen();  // Adiciona o swagger
 builder.Services.AddScoped<IRegisterUserUseCase, RegisterUserUseCase>();
 builder.Services.AddScoped<IGetByIdUseCase, GetByIdUseCase>();
 builder.Services.AddScoped<IGetByEmailUseCase, GetByEmailUseCase>();
+builder.Services.AddScoped<IValidatePasswordUseCase, ValidatePasswordUserUseCase>();
 
 // Repository
 builder.Services.AddScoped<IUserRepository, UserRepository>();

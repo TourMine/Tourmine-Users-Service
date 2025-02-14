@@ -15,6 +15,17 @@ namespace Tourmine.Users.WebAPI.Controllers
             return Ok(result);
         }
 
+        [HttpPost("v1/validate-password")]
+        public async Task<IActionResult> ValidatePassword([FromBody] ValidatePasswordRequest request, [FromServices] IValidatePasswordUseCase useCase)
+        {
+            var result = await useCase.Execute(request);
+
+            if(result == false)
+                return Unauthorized();
+
+            return Ok(result);
+        }
+
         [HttpGet("v1/{id}")]
         public async Task<IActionResult> GetById([FromRoute] Guid id, [FromServices] IGetByIdUseCase useCase)
         {
