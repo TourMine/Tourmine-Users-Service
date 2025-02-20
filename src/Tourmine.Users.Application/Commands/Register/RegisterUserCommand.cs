@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Tourmine.Users.Application.Requests;
 
-namespace Tourmine.Users.Application.Commands
+namespace Tourmine.Users.Application.Commands.Register
 {
     public class RegisterUserCommand : IRequest<bool>
     {

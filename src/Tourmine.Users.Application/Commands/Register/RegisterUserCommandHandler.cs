@@ -3,7 +3,7 @@ using Tourmine.Users.Domain.Entities;
 using Tourmine.Users.Domain.Interfaces.Repositories;
 using Tourmine.Users.Domain.Interfaces.Services;
 
-namespace Tourmine.Users.Application.Commands
+namespace Tourmine.Users.Application.Commands.Register
 {
     public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, bool>
     {
