@@ -15,6 +15,13 @@ namespace Tourmine.Users.WebAPI.Controllers
             return Ok(result);
         }
 
+        [HttpPut("v1/{id}")]
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] UpdateUserRequest request, [FromServices] IUpdateUserUseCase useCase)
+        {
+            var result = await useCase.Execute(id, request);
+            return Ok(result);
+        }
+
         [HttpPost("v1/validate-password")]
         public async Task<IActionResult> ValidatePassword([FromBody] ValidatePasswordRequest request, [FromServices] IValidatePasswordUseCase useCase)
         {

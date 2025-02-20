@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Tourmine.Users.Application.Commands;
+using Tourmine.Users.Application.Commands.Register;
 using Tourmine.Users.Application.Interfaces;
 using Tourmine.Users.Application.Query.Users.GetByEmail;
 using Tourmine.Users.Application.Requests;

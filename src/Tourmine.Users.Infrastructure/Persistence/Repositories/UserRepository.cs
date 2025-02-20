@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Tourmine.Users.Domain.DTO;
 using Tourmine.Users.Domain.Entities;
 using Tourmine.Users.Domain.Interfaces.Repositories;
 using Tourmine.Users.Infrastructure.Context;
@@ -27,6 +28,37 @@ namespace Tourmine.Users.Infrastructure.Persistence.Repositories
                 }
 
                 return false;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public async Task<bool> Update(Guid id, UpdateUserDTO userEntity)
+        {
+            try
+            {
+                var user = await _context.Users.FindAsync(id);
+
+                if (userEntity.Name != null)
+                {
+                    user.Name = userEntity.Name;
+                }
+
+                if (userEntity.Email != null)
+                {
+                    user.Email = userEntity.Email;
+                }
+
+                if (userEntity.Password != null)
+                {
+                    user.Password = userEntity.Password;
+                }
+
+                var result = await _context.SaveChangesAsync();
+
+                return result > 0;
             }
             catch (Exception ex)
             {
