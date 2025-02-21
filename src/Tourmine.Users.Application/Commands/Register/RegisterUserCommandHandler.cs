@@ -1,5 +1,7 @@
 ﻿using MediatR;
+using System.Xml.Linq;
 using Tourmine.Users.Domain.Entities;
+using Tourmine.Users.Domain.Enums;
 using Tourmine.Users.Domain.Interfaces.Repositories;
 using Tourmine.Users.Domain.Interfaces.Services;
 
@@ -24,13 +26,12 @@ namespace Tourmine.Users.Application.Commands.Register
 
         private User ConvertToEntity(RegisterUserCommand request)
         {
-            return new User
-            {
-                Name = request.Request.Name,
-                Email = request.Request.Email,
-                Password = _passwordHasherService.HashPassword(request.Request.Password),
-                UserType = request.Request.UserType
-            };
+            return new User(
+                request.Request.Name,
+                request.Request.Email,
+                _passwordHasherService.HashPassword(request.Request.Password),
+                request.Request.UserType
+            );
         }
     }
 }
